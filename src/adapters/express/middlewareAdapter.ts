@@ -10,7 +10,6 @@ export const adaptMiddleware = (middleware: IMiddleware) => async (
 ): Promise<any> => {
   const httpRequest: HttpRequest = {
     headers: req.headers,
-    ip: req.ip,
   };
 
   try {

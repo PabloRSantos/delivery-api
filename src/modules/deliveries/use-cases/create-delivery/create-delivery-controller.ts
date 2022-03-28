@@ -5,7 +5,8 @@ export class CreateDeliveryController implements IController {
   constructor(private readonly createDeliveryUseCase: CreateDeliveryUseCase) {}
 
   async handle(data: HttpRequest): Promise<HttpResponse> {
-    const { item_name, id_client } = data.body;
+    const { item_name } = data.body;
+    const id_client = data.id_client || '';
 
     const delivery = await this.createDeliveryUseCase.execute({ item_name, id_client });
 
