@@ -1,4 +1,4 @@
-import { HttpRequest, HttpResponse, IController } from '../../../protocols';
+import { IController, HttpRequest, HttpResponse } from '../../../../protocols';
 import { CreateClientUseCase } from './create-client-use-case';
 
 export class CreateClientController implements IController {

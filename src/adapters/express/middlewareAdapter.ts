@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import { AppError } from '../../appError';
 
 import { IMiddleware, HttpRequest } from '../../protocols';
 
@@ -17,8 +18,11 @@ export const adaptMiddleware = (middleware: IMiddleware) => async (
 
     Object.assign(req, httpResponse.body);
     return next();
-  } catch (error: any) {
-    console.log(error.message);
-    return res.status(500).json({ error: error.message });
+  } catch (error) {
+    if (error instanceof AppError) {
+      return res.status(error.statusCode).json({ error: error.message });
+    }
+
+    return res.status(500).json({ error: 'Erro interno' });
   }
 };
