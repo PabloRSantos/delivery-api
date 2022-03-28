@@ -1,5 +1,6 @@
 import { compare } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
+import { AppError } from '../../../../appError';
 import { prisma } from '../../../../database/prismaClient';
 
 interface IAuthenticateClient {
@@ -16,12 +17,12 @@ export class AuthenticateClientUseCase {
     });
 
     if (!client) {
-      throw new Error('Usuário ou senha incorretas');
+      throw new AppError('Usuário ou senha incorretas', 400);
     }
 
     const passwordMatch = await compare(password, client.password);
     if (!passwordMatch) {
-      throw new Error('Usuário ou senha incorretas');
+      throw new AppError('Usuário ou senha incorretas', 400);
     }
 
     const token = sign({ username }, 'secret', {
