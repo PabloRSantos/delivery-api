@@ -13,6 +13,7 @@ import {
   makeCreateDeliveryController,
   makeFindAllAvailableController,
   makeUpdateDeliverymanController,
+  makeUpdateEndDateController,
 } from './modules/deliveries/use-cases';
 import { makeCreateDeliverymanController, makeFindAllDeliveriesController } from './modules/deliveryman/use-cases';
 
@@ -52,6 +53,11 @@ routes.put(
   '/delivery/update-deliveryman/:id',
   adaptMiddleware(makeEnsureAuthenticatedDeliverymanMiddleware()),
   adaptRoute(makeUpdateDeliverymanController()),
+);
+routes.put(
+  '/delivery/update-end-date/:id',
+  adaptMiddleware(makeEnsureAuthenticatedDeliverymanMiddleware()),
+  adaptRoute(makeUpdateEndDateController()),
 );
 
 export { routes };
