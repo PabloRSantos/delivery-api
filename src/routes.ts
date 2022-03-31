@@ -8,7 +8,7 @@ import {
   makeAuthenticateClientController,
   makeAuthenticateDeliverymanController,
 } from './modules/accounts/use-cases';
-import { makeCreateClientController } from './modules/clients/use-cases';
+import { makeCreateClientController, makeFindDeliveriesController } from './modules/clients/use-cases';
 import {
   makeCreateDeliveryController,
   makeFindAllAvailableController,
@@ -27,6 +27,11 @@ routes.post('/client', adaptRoute(makeCreateClientController()));
 routes.post(
   '/client/authenticate',
   adaptRoute(makeAuthenticateClientController()),
+);
+routes.get(
+  '/client/deliveries',
+  adaptMiddleware(makeEnsureAuthenticatedMiddleware()),
+  adaptRoute(makeFindDeliveriesController()),
 );
 routes.post(
   '/delivery',
