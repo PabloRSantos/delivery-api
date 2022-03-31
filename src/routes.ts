@@ -14,7 +14,7 @@ import {
   makeFindAllAvailableController,
   makeUpdateDeliverymanController,
 } from './modules/deliveries/use-cases';
-import { makeCreateDeliverymanController } from './modules/deliveryman/use-cases';
+import { makeCreateDeliverymanController, makeFindAllDeliveriesController } from './modules/deliveryman/use-cases';
 
 const routes = Router();
 
@@ -22,6 +22,11 @@ routes.post('/deliveryman', adaptRoute(makeCreateDeliverymanController()));
 routes.post(
   '/deliveryman/authenticate',
   adaptRoute(makeAuthenticateDeliverymanController()),
+);
+routes.get(
+  '/deliveryman/deliveries',
+  adaptMiddleware(makeEnsureAuthenticatedDeliverymanMiddleware()),
+  adaptRoute(makeFindAllDeliveriesController()),
 );
 routes.post('/client', adaptRoute(makeCreateClientController()));
 routes.post(
